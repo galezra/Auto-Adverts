@@ -68,7 +68,13 @@ var msgTest = new Array();
             },complete: function () {
             if(msgTest.length == 1)
             {
-                showMessage(msgTest[0])
+                if(checkIfToday(msgTest[0].time[0])){
+                    showMessage(msgTest[0])
+                }
+                else{
+                $(location).attr('href', './404.html');
+                return 0;
+                 }
             }
             else{
                 manageMessages(msgTest,screenId)
