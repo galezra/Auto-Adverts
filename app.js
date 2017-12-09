@@ -1,3 +1,7 @@
+/*
+* Author: Gal
+* */
+
 // Set web server
 var express = require('express');
 var app = express();
