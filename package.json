@@ -1,0 +1,23 @@
+{
+  "name": "autoadv",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.16.2",
+    "jQuery": "^1.7.4",
+    "jquery": "^3.2.1",
+    "jsdom": "^11.5.1",
+    "mongodb": "^3.0.0-rc0",
+    "require": "^2.4.20"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.39"
+  },
+  "description": ""
+}

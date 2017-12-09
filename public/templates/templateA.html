@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            background-image: url("../images/backgroundA.jpg");
+        }
+        #test{
+            background: linear-gradient(to left, #d53369 , #cbad6d);
+        }
+
+
+        .highlight  {
+            width: 100%;
+            color: white;
+            background: rgba(0, 0, 0, 0.26);
+            border-radius: 10px;
+            padding: 5%;
+            margin-bottom: 1%;
+
+        }
+
+        .highlight img {
+
+            float: left;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .highlight ul {
+            list-style-image: url('http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/tick-small-icon.png');
+            margin-left: 1%;
+            float: left;
+            clear: right
+        }
+
+
+        .highlight h2,h3,h4,h5,h6 {
+            padding-bottom: 2%;
+            border-bottom: 2px dashed rgba(255, 255, 255, 0.41);
+            font-size:20px;
+            text-align : center;
+            text-transform: uppercase;
+        }
+
+        .highlight p {
+            text-align: justify;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="test" class ="container">
+
+    <div class=" highlight" style="margin-left:0;">
+        <h2>Super Product Highlight</h2>
+        <div class="row">
+            <img src ="http://davidnaylor.org/temp/thunderbird-logo-200x200.png" />
+            <ul id="txt">
+            </ul>
+        </div>
+        <div class="row">
+            <p>Morbi laoreet ipsum sem, eu condimentum ante efficitur vel.
+                Donec at nibh risus. Nam mollis nulla eget scelerisque facilisis.
+                Suspendisse sit amet condimentum dolor. Vestibulum euismod congue mi
+                pulvinar dignissim. </p>
+        </div>
+    </div>
+</div>
+<br><br>
+<div class="row">
+<section id="portfolio-container" class="padding-60">
+    <div class="container" align="center">
+        <div>
+            <ul id="images"></ul>
+        </div>
+    </div>
+</section>
+</div>
+</body>
+</html>
