@@ -5,9 +5,24 @@
 // Set web server
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // Set 'public' folder to share client
 app.use(express.static('public'));
+
+////////////Start Socket test/////////////////
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+    });
+});
+
+app.get('/test', function(req, res){
+    res.sendFile(__dirname + '/public/test.html');
+});
+///////////////End test////////////////
+
 
 //------MongoDB section------//
 var MongoClient = require('mongodb').MongoClient;
@@ -88,6 +103,7 @@ MongoClient.connect(url, function(err, db) {
 
 });
 */
+
 // Find messages
 app.get('/loadMessagesId',function (req,res) {
     var screenId = parseInt(req.query.id);
@@ -129,6 +145,6 @@ app.get('/public/404', function (req, res) {
     res.sendFile(__dirname + "/public/404.html")
 });
 
-app.listen(8080, function () {
+http.listen(8080,function () {
     console.log('Example app listening on port 8080!');
 });
