@@ -5,30 +5,108 @@
 // Set web server
 var express = require('express');
 var app = express();
+app.use(express.static('public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-// Set 'public' folder to share client
-app.use(express.static('public'));
-
-////////////Start Socket test/////////////////
-io.on('connection', function(socket){
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-    });
-});
-
-app.get('/test', function(req, res){
-    res.sendFile(__dirname + '/public/test.html');
-});
-///////////////End test////////////////
-
-
-//------MongoDB section------//
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/myDB";
 
+// Main index
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + "/public/index.html")
+});
 
+// Get the parameter for the screen number
+app.get('/screen=:id', function (req, res) {
+    //var chooseScreenId = req.params.id;
+    res.sendFile(__dirname + "/public/screens.html")
+});
+
+// Get the correct template from the client
+app.get('/public/templates/:template', function (res, req) {
+    var chooseTemplate = res.params.template;
+    req.sendFile(__dirname + "/public/templates/" + chooseTemplate + ".html")
+
+});
+
+// Get 404 page
+app.get('/public/404', function (req, res) {
+    res.sendFile(__dirname + "/public/404.html")
+});
+
+// Find messages
+app.get('/loadMessagesId', function (req, res) {
+    var screenId = parseInt(req.query.id);
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var messagesDB = db.db('myDB');
+        var query = {id: screenId};
+        messagesDB.collection("messages").find(query).toArray(function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
+//--<<<<<<Socket section>>>>>>>--//
+
+// Get messages by screenId
+io.on('connection', function (client) {
+    // Get screen id from client
+    client.on('load messages', function (id) {
+        // Send messages to server
+        var screenId = parseInt(id);
+        MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            var messagesDB = db.db('myDB');
+            var query = {id: screenId};
+            messagesDB.collection("messages").find(query).toArray(function (err, result) {
+                if (err) throw err;
+                db.close();
+                client.emit('load messages', result)
+            });
+
+        });
+    });
+
+});
+
+// Insert and update single message
+app.get('/TestUpdate?:id', function (req, res) {
+    var msgTest = {
+        name: "messageTest",
+        id: [4],
+        text: ["Best service", "Good Quality", "Perfect Job", "Nice Place"],
+        images: ["../images/msg1.png", "../images/msg1.2.gif"],
+        template: "templateA",
+        showTime: 4,
+        time: [{date: ["01-01-2017", "12-30-2017"], days: [{Sunday: ["6", "24"], Wednesday: ["13", "20"]}]}]
+    };
+    var id = req.query.id;
+
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        var insertMsg = db.db('myDB');
+        insertMsg.collection("messages").insertOne(msgTest, function (err, res) {
+            if (err) throw err;
+            console.log("1 document inserted");
+            db.close();
+        });
+    });
+
+
+    res.send(id)
+});
+//--<<<<<<End Socket section>>>>>>>--//
+
+http.listen(8080, function () {
+    console.log('listening on port 8080...');
+});
+
+//--<<<<<<MongoDB init section>>>>>>--//
 // Create messages collection
 /*
 MongoClient.connect(url, function(err, db) {
@@ -103,48 +181,4 @@ MongoClient.connect(url, function(err, db) {
 
 });
 */
-
-// Find messages
-app.get('/loadMessagesId',function (req,res) {
-    var screenId = parseInt(req.query.id);
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
-        var messagesDB = db.db('myDB');
-        var query = {id : screenId };
-        messagesDB.collection("messages").find(query).toArray(function(err, result) {
-            if (err) throw err;
-            console.log(result);
-            res.json(result);
-            db.close();
-        });
-    });
-
-});
-//------MongoDB end section------//
-
-// Main index
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + "/public/index.html")
-});
-
-// Get the parameter for the screen number
-app.get('/screen=:id', function (req, res) {
-    //var chooseScreenId = req.params.id;
-    res.sendFile(__dirname + "/public/screens.html")
-});
-
-// Get the correct template from the client
-app.get('/public/templates/:template',function (res,req) {
-    var chooseTemplate = res.params.template;
-    req.sendFile(__dirname + "/public/templates/"+chooseTemplate+".html")
-
-});
-
-// Get 404 page
-app.get('/public/404', function (req, res) {
-    res.sendFile(__dirname + "/public/404.html")
-});
-
-http.listen(8080,function () {
-    console.log('Example app listening on port 8080!');
-});
+//--<<<<<<End MongoDB section>>>>>>--//
