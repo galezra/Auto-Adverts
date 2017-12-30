@@ -24,7 +24,7 @@ socket.on('update message',function (data) {
 // Get messages by socket
 function getMessages(messages) {
     if (messages.length == 1) {
-        if (checkIfToday(messages[0].time[0])) {
+        if (checkIfToday(messages[0])) {
             showMessage(messages[0])
         }
         else {
@@ -42,7 +42,7 @@ function getMessages(messages) {
 function manageMessages(messages) {
 
     for (index; index < messages.length; index++) {
-        if (checkIfToday(messages[index].time[0])) {
+        if (checkIfToday(messages[index])) {
             showMessage(messages[index]);
             setTimeoutForMessage(messages[index], messages);
             break;
@@ -81,18 +81,16 @@ function checkDate(messageDate) {
 // Check if message can be display by day
 function checkDay(message) {
     var d = today.toLocaleString('en-us', {weekday: 'long'});
-    for (var i = 0; i < message.length; i++) {
-        var days = message[i];
-        for (var key in days) {
-            var startHour = days[key][0];
-            var endHour = days[key][1];
+        for (var key in message) {
+            var startHour = message[key][0];
+            var endHour = message[key][1];
             if ((key == d) && (today.getHours() >= startHour && today.getHours() <= endHour)) {
                 isAnyActiveMessage = 1;
                 return 1;
             }
         }
 
-    }
+
     return 0;
 }
 
@@ -107,7 +105,7 @@ function showMessage(messageIn) {
         });
 
         $.each(messageIn.images, function (key, value) {
-            $("ul#images").append('<img width="300"  src="' + value + '"/>');
+            $("ul#images").append('<managerIMG width="300"  src="' + value + '"/>');
 
         })
 
