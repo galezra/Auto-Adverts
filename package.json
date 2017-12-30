@@ -8,6 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.6.8",
+    "angular-route": "^1.6.8",
     "bootstrap": "^3.3.7",
     "express": "^4.16.2",
     "jQuery": "^1.7.4",
