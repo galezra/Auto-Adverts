@@ -4,15 +4,25 @@
 
 // Set web server
 var express = require('express')
-    , advertApi = require('./routes/advertApi');
+    , advertApi = require('./routes/advertApi')
+    , bodyParser = require('body-parser');
 
 var app = module.exports = express();
 app.use(express.static('public'));
+app.use(express.static('node_modules'));
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/myDB";
+
+// Configuration
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 // Main manager page using angular
 app.get('/manager', function (req, res) {
@@ -22,13 +32,16 @@ app.get('/manager', function (req, res) {
 // Adverts
 app.get('/api/dataservice/GetAllAdverts', advertApi.getAllAdverts);
 app.get('/api/dataservice/EditAdvert/:_id',advertApi.editAdvert);
+app.put('/api/dataservice/UpdateAdvert', advertApi.updateAdvert);
+app.post('/api/dataservice/CreateAdvert', advertApi.createAdvert);
 app.delete('/api/dataservice/DeleteAdverts/:_id',advertApi.deleteAdvertById);
+app.post('/public/images/uploads/',advertApi.upload);
+
 
 // Main index
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/public/index.html")
 });
-
 
 // Get the parameter for the screen number
 app.get('/screen=:id', function (req, res) {
@@ -168,8 +181,8 @@ MongoClient.connect(url, function(err, db) {
             "images": ["../images/msg1.png", "../images/msg1.2.gif"],
             "template": "templateB",
             "showTime": 4,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["01-01-2017", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
 
 
         },
@@ -180,8 +193,8 @@ MongoClient.connect(url, function(err, db) {
             "images": ["../images/msg1.png", "../images/msg1.2.gif"],
             "template": "templateA",
             "showTime": 4,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["2017-01-01", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
         },
         {
             "name": "message2",
@@ -190,8 +203,8 @@ MongoClient.connect(url, function(err, db) {
             "images": ["../images/msg2.gif"],
             "template": "templateB",
             "showTime": 4,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["2017-01-01", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
         },
         {
             "name": "message3",
@@ -200,8 +213,8 @@ MongoClient.connect(url, function(err, db) {
             "images": [],
             "template": "templateC",
             "showTime": 5,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["2017-01-01", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
         },
         {
             "name": "message4",
@@ -210,8 +223,8 @@ MongoClient.connect(url, function(err, db) {
             "images": [],
             "template": "templateA",
             "showTime": 4,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["2017-01-01", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
         },
         {
             "name": "message5",
@@ -220,8 +233,8 @@ MongoClient.connect(url, function(err, db) {
             "images": ["http://www.free.fr/freebox/im/logo_free.png", "http://www.free.fr/freebox/im/logo_free.png"],
             "template": "templateC",
             "showTime": 4,
-            "date": ["01-01-2017", "12-30-2017"],
-            "days": {"Sunday": ["1", "23"], "Tuesday": ["1", "23"], "Friday": ["1", "23"]}
+            "date": ["2017-01-01", "2018-12-12"],
+            "days": {"Sunday": [1, 23], "Tuesday": [1, 23], "Saturday": [1, 23]}
         }
     ];
     messagesDB.collection("messages").insertMany(messages,{unique:true}, function(err, res) {
