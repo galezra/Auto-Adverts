@@ -1,11 +1,10 @@
 var today = new Date();
 var index = 0;
-var url = $(location).attr('href');
-var screenId = url.charAt(url.length - 1);
+
 var isAnyActiveMessage = 0;
 
 // Start the web program
-function start() {
+function start(screenId) {
     var socket = io();
     // Send screen id to server
     socket.emit('load messages', screenId);
@@ -16,10 +15,23 @@ function start() {
     });
 }
 
-var socket = io();
-socket.on('update message',function (data) {
-    console.log(data);
-});
+function customStart(id,date,hour) {
+    today = new Date(date);
+    today.setHours(hour);
+    var socket = io();
+    // Send screen id to server
+    socket.emit('load messages', id);
+
+    // get messages by id from server
+    socket.on('load messages', function (data) {
+        getMessages(data);
+    });
+
+}
+// var socket = io();
+// socket.on('update message',function (data) {
+//     console.log(data);
+// });
 
 // Get messages by socket
 function getMessages(messages) {
@@ -105,7 +117,7 @@ function showMessage(messageIn) {
         });
 
         $.each(messageIn.images, function (key, value) {
-            $("ul#images").append('<managerIMG width="300"  src="' + value + '"/>');
+            $("ul#images").append('<img width="250" height="200"  src="' + value + '"/>');
 
         })
 
@@ -133,27 +145,3 @@ function checkScreenId(messageId, id) {
     }
 }
 
-// // Get messages from database
-//     function getMessages(id){
-//         var parameters = { id: id };
-//         $.ajax({url: "/loadMessagesId",data:parameters, success: function(result){
-//               msgTest = result;
-//             console.log(msgTest)
-//             },complete: function () {
-//             if(msgTest.length == 1)
-//             {
-//                 if(checkIfToday(msgTest[0].time[0])){
-//                     showMessage(msgTest[0])
-//                 }
-//                 else{
-//                 $(location).attr('href', './404.html');
-//                 return 0;
-//                  }
-//             }
-//             else{
-//                 manageMessages(msgTest,screenId)
-//             }
-//
-//
-//             }});
-//     }
