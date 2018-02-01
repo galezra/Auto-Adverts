@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom Adverts</title>
+</head>
+<style>
+    #test2 {
+        border-style: dotted;
+        width: 900px;
+        height: 600px;
+        margin-top: 20px;
+        margin-left: 300px;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="col-lg-8">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> Custom Adverts</h4>
+            <form class="form-horizontal style-form " method="get">
+
+                <div class="form-row">
+
+
+                    <div class="col-md-2 mb-3">
+                        <label>Id:</label>
+                        <select class="custom-select " name="id" ng-model="selected">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-3 offset-1 mb-3">
+                        <label>Date:</label>
+                        <input class="form-control" type="date" name="date">
+                    </div>
+
+                    <div class="col-md-2 offset-1 mb-3">
+                        <label>Hour</label>
+                        <input class="form-control" type="number" name="hour">
+                    </div>
+
+
+                    <button class="btn btn-success offset-1" id="save-button"
+                            onclick="customStart(form.id.value,form.date.value,form.hour.value)" type="submit">
+                        Show
+                    </button>
+
+
+                </div>
+            </form>
+        </div>
+    </div><!-- col-lg-12-->
+</div><!-- /row -->
+<div id="test2">
+    <div class="myBody" id="myBody"></div>
+</div>
+
+
+</body>
+</html>
