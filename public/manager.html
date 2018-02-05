@@ -14,24 +14,46 @@
     <script src="javascript/libs/angular-route.js"></script>
     <script src="app.js"></script>
     <script src="controllers/ManageCtrl.js"></script>
+    <script src="service/statsService.js"></script>
+    <script src="controllers/viewAdvCtrl.js"></script>
     <script src="controllers/AdvDetailsCtrl.js"></script>
     <script src="service/advDetailsService.js"></script>
-    <!--<base href="/"TODO: for the # in the url />-->
+    <script src="javascript/libs/angular-file-upload/dist/angular-file-upload.js"></script>
+    <script src="controllers/AdvSettingsCtrl.js"></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="CSS/managerCSS/bootstrap.css" rel="stylesheet">
+    <!--<link href="CSS/managerCSS/bootstrap.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="CSS/bootstrap.css">
+
     <!--external managerCSS-->
-    <link href="CSS/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="CSS/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
     <link href="CSS/managerCSS/style.css" rel="stylesheet">
     <link href="CSS/managerCSS/style-responsive.css" rel="stylesheet">
+    <script src="javascript/js/sweetalert2/dist/sweetalert2.js"></script>
+    <link rel="stylesheet" href="javascript/js/sweetalert2/dist/sweetalert2.css">
 
+    <!--Algorithm-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascript/manageMessages.js"></script>
+
+    <!--d3-->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="javascript/libs/d3.v4.min.js"></script>
+    <script src="javascript/js/liquidFillGauge.js"></script>
+
+    <!--Google maps-->
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT5_PQCCA1B06aTOI-_rWiNpk3qXGZ1JQ"></script>
+
+    <!--Twitter-->
+    <script async src="javascript/js/http_platform.twitter.com_widgets.js"></script>
 </head>
 
-<body ng-app="myApp" ng-controller="manageCtrl">
+<body ng-app="manageAdv">
 
-<section id="container" >
+<section id="container">
     <!-- **********************************************************************************************************************************************************
     TOP BAR CONTENT & NOTIFICATIONS
     *********************************************************************************************************************************************************** -->
@@ -41,88 +63,9 @@
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo"><b>Dashboard</b></a>
+        <a href="/manager" class="logo"><b>Dashboard</b></a>
         <!--logo end-->
-        <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-            <ul class="nav top-menu">
-                <!-- settings start -->
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                        <i class="fa fa-tasks"></i>
-                        <span class="badge bg-theme">4</span>
-                    </a>
-                    <ul class="dropdown-menu extended tasks-bar">
-                        <div class="notify-arrow notify-arrow-green"></div>
-                        <li>
-                            <p class="green">You have 4 pending tasks</p>
-                        </li>
-                        <li>
-                            <a href="index.html#">
-                                <div class="task-info">
-                                    <div class="desc">DashGum Admin Panel</div>
-                                    <div class="percent">40%</div>
-                                </div>
-                                <div class="progress progress-striped">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                        <span class="sr-only">40% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.html#">
-                                <div class="task-info">
-                                    <div class="desc">Database Update</div>
-                                    <div class="percent">60%</div>
-                                </div>
-                                <div class="progress progress-striped">
-                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.html#">
-                                <div class="task-info">
-                                    <div class="desc">Product Development</div>
-                                    <div class="percent">80%</div>
-                                </div>
-                                <div class="progress progress-striped">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                        <span class="sr-only">80% Complete</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="index.html#">
-                                <div class="task-info">
-                                    <div class="desc">Payments Sent</div>
-                                    <div class="percent">70%</div>
-                                </div>
-                                <div class="progress progress-striped">
-                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                        <span class="sr-only">70% Complete (Important)</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="external">
-                            <a href="#">See All Tasks</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- settings end -->
-            </ul>
-            <!--  notification end -->
-        </div>
-        <div class="top-menu">
-            <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="login.html">Logout</a></li>
-            </ul>
-        </div>
+
     </header>
     <!--header end-->
 
@@ -131,28 +74,35 @@
     *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
     <aside>
-        <div id="sidebar"  class="nav-collapse ">
+        <div id="sidebar" class="nav-collapse ">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu" id="nav-accordion">
 
-                <p class="centered"><a href="profile.html"><img src="images/managerIMG/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                <h5 class="centered">Yooo</h5>
+                <p class="centered"><a href="profile.html"><img src="images/managerIMG/ui-sam.jpg" class="img-circle"
+                                                                width="60"></a></p>
+                <h5 class="centered">Gal</h5>
 
                 <li class="mt">
-                    <a href="index.html">
+                    <a href="#">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript" >
+                    <a href="javascript">
                         <i class="fa fa-th"></i>
                         <span>Data Adverts</span>
                     </a>
                     <ul class="sub">
-                        <li><a  href="#!advDetails">Adverts details</a></li>
-                        <li><a  href="#!advCreate">Add advert</a></li>
+                        <li><a href="#!advDetails">Adverts details</a></li>
+                        <li><a href="#!customAdverts">Custom Adverts</a></li>
                     </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="#!advSettings">
+                        <i class="fa fa-wrench"></i>
+                        <span>Settings</span>
+                    </a>
                 </li>
 
             </ul>
@@ -169,13 +119,12 @@
         <section class="wrapper site-min-height">
             <div class="row mt">
                 <div class="col-lg-12">
-                    <div class="container">
-                        <ng-view></ng-view>
-                    </div>
+                    <ng-view></ng-view>
                 </div>
             </div>
 
-        </section><! --/wrapper -->
+
+        </section><!--/wrapper -->
     </section><!-- /MAIN CONTENT -->
 
     <!--main content end-->
@@ -200,7 +149,6 @@
 <script class="include" type="text/javascript" src="javascript/js/jquery.dcjqaccordion.2.7.js"></script>
 <script src="javascript/js/jquery.scrollTo.min.js"></script>
 <script src="javascript/js/jquery.nicescroll.js" type="text/javascript"></script>
-
 
 <!--common script for all pages-->
 <script src="javascript/js/common-scripts.js"></script>
