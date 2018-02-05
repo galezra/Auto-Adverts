@@ -1,14 +1,13 @@
 
 "use strict";
 function viewAdvCtrl($scope,$rootScope,$location,advDetailsService ) {
-
-    if($location.path() == "/advDetails"){
-        advDetailsService.getAllAdvert().then(function (value) {
+$scope.count = 1;
+    advDetailsService.getAllAdvert().then(function (value) {
             $scope.msgs = value.data;
             $scope.msgEdit = {};
 
         });
-    }
+
     $scope.delete = function (_id) {
         swal({
             title: 'Are you sure?',
@@ -37,7 +36,7 @@ function viewAdvCtrl($scope,$rootScope,$location,advDetailsService ) {
     };
 
 }
-angular.module('myApp').controller('viewAdvCtrl',[ '$scope','$rootScope','$location','advDetailsService',viewAdvCtrl]);
+angular.module('manageAdv').controller('viewAdvCtrl',[ '$scope','$rootScope','$location','advDetailsService',viewAdvCtrl]);
 
 
 
