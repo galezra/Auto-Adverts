@@ -1,0 +1,113 @@
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<div class="container">
+
+    <div class="row mtbox" ng-controller="viewAdvCtrl">
+        <div class="col-md-2 col-sm-2 col-md-offset-1 box0">
+            <div class="box1">
+                <h3>{{recommendedScreen}}</h3>
+            </div>
+            <p>Screen number {{recommendedScreen}} is the most active </p>
+        </div>
+        <div class="col-md-2 col-sm-2 box0">
+            <div class="box1">
+                <h3>{{msgs.length}}</h3>
+            </div>
+            <p>Currently {{msgs.length}} adverts on your database</p>
+        </div>
+        <div class="col-md-2 col-sm-2 box0">
+            <div class="box1">
+                <h3>{{templatesLen}}</h3>
+            </div>
+            <p>You have {{templatesLen}} templates</p>
+        </div>
+        <div class="col-md-2 col-sm-2 box0">
+            <div class="box1">
+                <h3><a href="/">Go</a></h3>
+            </div>
+            <p>Start using the application in your area</p>
+        </div>
+        <div class="col-md-2 col-sm-2 box0">
+            <div class="box1">
+                <h3>OK!</h3>
+            </div>
+            <p>Your server is working perfectly. Relax & enjoy.</p>
+        </div>
+
+    </div><!-- /row mt -->
+
+    <div class="row mt">
+
+        <div class="col-md-5 col-sm-4 mb">
+            <div class="white-panel pn">
+                <div class="white-header">
+                    <h5>Most recent template by adverts</h5>
+                </div>
+
+                <div class="centered">
+                    <svg id="groupByTemplate" width="400" height="200"></svg>
+                </div>
+            </div>
+        </div><!-- /col-md-4 -->
+
+        <div class="col-md-5 col-sm-4 mb">
+            <div class="white-panel pn">
+                <div class="white-header">
+                    <h5>Adverts Show time average</h5>
+                </div>
+                <div class="centered">
+                    <svg id="fillgauge1" width="400" height="180"></svg>
+                </div>
+            </div>
+        </div><!-- /col-md-4 -->
+
+
+    </div><!-- /row -->
+
+    <div class="row mt">
+
+        <div class="col-md-5 col-sm-4 mb">
+            <div class="white-panel pn">
+                <div class="white-header">
+                    <h5>Tweeter</h5>
+                </div>
+                <p><i class="fa fa-twitter"></i></p>
+                <p> <a class="twitter-timeline" href="https://twitter.com/AutoAdv1?ref_src=twsrc%5Efw">Tweets by AutoAdv1</a></p>
+
+                <textarea class="form-control" maxlength="256" id="my-tweet"></textarea>
+                <div class="centered">
+                    <div class="">
+                        <button class="btn-outline-danger" ng-click="tweetTweet()">Tweet</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /col-md-4 -->
+
+        <div class="col-md-5 col-sm-4 mb">
+            <div class="white-panel pn">
+                <div class="white-header">
+                    <h5>Most active screen</h5>
+                </div>
+                <div class="centered">
+
+                    <p><h1>{{recommendedScreen}}</h1></p>
+                </div>
+            </div>
+        </div><!-- /col-md-4 -->
+
+    </div><!-- /row -->
+
+    <div class="row mt">
+        <div class="col-md-10 col-sm-4 mb">
+            <div class="white-panel pn">
+                <div class="white-header">
+                    <h5>Screen Locations</h5>
+                </div>
+                <div class="centered">
+                    <div id="map" style="height: 200px; width: 100%"></div>
+                </div>
+            </div>
+        </div><!-- /col-md-4 -->
+    </div><!-- /row -->
+
+</div>

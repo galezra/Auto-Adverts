@@ -1,0 +1,45 @@
+<table class="table  table-bordered table-striped table-condensed ">
+    <div class="container">
+        <!--Search Panel-->
+        <div class="row">
+            <h3><label class="col-sm-1 offset-md-1 control-label"> Filter:</label></h3>
+            <div class="col-md-2">
+                <div class="input-group-btn search-panel">
+                    <input type="text" placeholder="Search by id.." class="form-control" ng-model="Sid">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group-btn search-panel">
+                    <input type="text" placeholder="Search by name.." class="form-control"
+                           ng-model="Sname">
+                </div>
+            </div>
+
+            <!--<div class="col-md-3">-->
+                <!--<div class="input-group-btn search-panel">-->
+                    <!--<input type="text" placeholder="Search by template.." class="form-control"-->
+                           <!--ng-model="Stemplate">-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+        </div>
+
+
+        <thead>
+        <tr>
+            <th>Screen id</th>
+            <th>Adverts</th>
+        </tr>
+
+        <tbody>
+        <tr ng ng-repeat="adv in advs track by $index ">
+            <td></td>
+            <td>
+                <ul><li ng-repeat="(k,v) in adv[1] | filter: {name:Sname}" >{{v.name}}</li></ul>
+            </td>
+        </tr>
+        </tbody>
+        </thead>
+    </div>
+</table>

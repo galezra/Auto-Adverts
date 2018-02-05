@@ -1,0 +1,123 @@
+<style>
+    .noPadding {
+        padding: 2px;
+        margin: 2px;
+    }
+
+    td ul li {
+        overflow: hidden;
+        white-space: nowrap;
+        width: 90px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container">
+        <h3><i class="fa fa-angle-right"></i> Advertise Details</h3>
+        <div class="row mt">
+                <div class="content-panel"style="width: 100%">
+                    <!--Search Panel-->
+                    <div class="row">
+                        <h3><label class="col-sm-1 offset-md-1 control-label"> Filter:</label></h3>
+                        <div class="col-md-2">
+                            <div class="input-group-btn search-panel">
+                                <input type="text" placeholder="Search by id.." class="form-control" ng-model="Sid">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group-btn search-panel">
+                                <input type="text" placeholder="Search by name.." class="form-control"
+                                       ng-model="Sname">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="input-group-btn search-panel">
+                                <input type="text" placeholder="Search by template.." class="form-control"
+                                       ng-model="Stemplate">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <!--End Search Panel-->
+
+                    <section id="unseen">
+                        <table class="table  table-bordered table-striped table-condensed ">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Message</th>
+                                <th>Screen Id</th>
+                                <th>Text</th>
+                                <th>Images</th>
+                                <th>Template</th>
+                                <th>ShowTime</th>
+                                <th>Dates</th>
+                                <th>Days</th>
+                                <th>Hours</th>
+                                <th>
+                                    <button><a ng-href="#!advCreate"><i class="fa fa-plus" aria-hidden="true">
+                                        Add</i></a></button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in msgs| filter: {name:Sname} | filter:{id:Sid} | filter:{template:Stemplate} ">
+                                <td>#{{$index+1}}</td>
+                                <td>{{data.name}}</td>
+                                <td>
+                                    <ul class="noPadding">
+                                        <li ng-repeat="y in data.id track by $index"><a href="#"><i class="fa fa-tv" style="font-size:12px;color:red"></i></a>
+                                            {{y}}
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="noPadding">
+                                        <li ng-repeat="y in data.text track by $index"><i class="fa fa-circle"
+                                                                                          style="font-size:4px"></i>
+                                            {{y}}
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="noPadding">
+                                        <li ng-repeat="y in data.images track by $index"><a ng-href="{{y}}">Image{{$index+1}}</a>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>{{data.template}}</td>
+                                <td>{{data.showTime}}</td>
+                                <td>
+                                    <ul class="noPadding">
+                                        <li ng-repeat="y in data.date track by $index">{{y | date: 'dd-MM-yyyy'}}</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="noPadding" ng-repeat="(y,v) in data.days">
+                                        <li>{{y}}</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="noPadding" ng-repeat="(y,v) in data.days">
+                                        <li>{{v[0]}}-{{v[1]}}</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <a ng-href="#!advEdit/{{data._id}}">
+                                        <button><i class="fa fa-pencil" style="font-size:20px;color:green"></i></button>
+                                    </a>
+                                    <button ng-click="delete(data._id)"><i class="fa fa-trash-o"
+                                                                           style="font-size:20px;color:red"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </div><!-- /content-panel -->
+            </div><!-- /col-lg-4 -->
+
+
+</div>

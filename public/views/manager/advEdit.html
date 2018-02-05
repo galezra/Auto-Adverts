@@ -1,0 +1,230 @@
+<style>
+    canvas {
+        background-color: #f3f3f3;
+         -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+         -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+        box-shadow: 3px 3px 3px 0 #e3e3e3;
+        border: 1px solid #c3c3c3;
+        height: 100px;
+        margin: 6px 0 0 6px;
+    }
+</style>
+<div class="container">
+    <section class="wrapper">
+        <!-- BASIC FORM ELELEMNTS -->
+        <div class="row mt">
+            <div class="col-lg-12">
+                <div class="form-panel">
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Advert</h4>
+                    <form class="form-horizontal style-form" method="get">
+
+                        <div class="form-row">
+                            <div class="col-sm-10  mb-3">
+                                <label class="control-label">_id</label>
+                                <input class="form-control" id="disabledInput" type="text" ng-model="msgEdit._id"
+                                       disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label>Name</label>
+                                <input type="text" class="form-control is-valid" ng-model="msgEdit.name" required>
+                                <span class="col-sm-4 control-label" style="color:red" ng-show="">
+                            <span ng-show="">required.</span>
+                        </span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label>Template</label>
+                                <select class="custom-select form-control is-valid" ng-model="msgEdit.template"
+                                        required>
+                                    <option ng-repeat="template in templates" ng-value="template">{{template}}</option>
+                                </select>
+                                <span class="col-sm-4 control-label" style="color:red" ng-show="">
+                            <span ng-show="">required.</span>
+                                </span>
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label>Showtime</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend2"><i class="fa fa-clock-o"
+                                                                                                  aria-hidden="true"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" type="text" min="0"
+                                           ng-model="msgEdit.showTime" required>
+                                </div>
+                                <span class="col-sm-4 control-label" style="color:red" ng-show="">
+                            <span ng-show="">required.</span>
+                                </span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="col-md-5 mb-3">
+
+                                <label>Screen id</label>
+                                <div class="input-group">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label offset-lg-2" ng-repeat="id in selectId">
+                                            <input type="checkbox" class="form-check-input" value="{{id}}"
+                                                   ng-checked="msgEdit.id.indexOf(id) > -1"
+                                                   ng-click="toggleSelection(id)">
+                                            {{id}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-5 mb-3">
+                                <label>Date</label>
+
+                                <div class="col-sm-6">
+                                    <input type="date" class="form-control is-valid" ng-model="msgEdit.date[0]"
+                                           value="{{msgEdit.date[0]}}">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="date" class="form-control is-valid" ng-model="msgEdit.date[1]"
+                                           value="{{msgEdit.date[1]}}">
+                                </div>
+                                <span class="col-sm-4 control-label" style="color:red" ng-show="">
+                            <span ng-show="">required.</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="col-sm-1 col-sm-4 control-label">Days</label>
+                            <div class="col-sm-11">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th ng-repeat="days in selectDays">
+                                            <input type="checkbox"
+                                                   ng-checked="Correctdays.indexOf(days) > -1" value="{{days}}"
+                                                   ng-click="toggleSelectionDays(days)"/>{{days}}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td ng-repeat="days in selectDays">
+                                            Start: <input type="number" min="0" max="23" class="form-control"
+                                                          ng-model="msgEdit.days[days][0]">
+                                            End: <input type="number" min="0" max="23" class="form-control"
+                                                        ng-model="msgEdit.days[days][1]">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <label class="col-sm-1 col-sm-2 control-label">Images</label>
+
+                            <input type="file" nv-file-select uploader="uploader" multiple/>
+
+                            <div class="col-md-10 col-lg-offset-0" style="margin-bottom: 40px">
+                                <p class="ng-binding"><h4>Queue length: {{uploader.queue.length}} </h4> </p>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="50%">Name</th>
+                                        <th ng-show="uploader.isHTML5">Size</th>
+                                        <th ng-show="uploader.isHTML5">Progress</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td>
+                                            <strong>{{ item.file.name }}</strong>
+                                            <!-- Image preview -->
+                                            <div ng-show="uploader.isHTML5"><img
+                                                    ng-src="images/uploads/{{item.file.name}}"
+                                                    onchange="image(item.file.name)"
+                                                    width="100" height="100">
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB
+                                        </td>
+                                        <td ng-show="uploader.isHTML5">
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar"
+                                                     ng-style="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                        <td nowrap>
+                                            <button type="button" class="btn btn-success btn-xs"
+                                                    ng-click="item.upload()"
+                                                    ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                <span class="glyphicon glyphicon-upload"></span> Upload
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs"
+                                                    ng-click="item.remove()">
+                                                <span class="glyphicon glyphicon-trash"></span> Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                    <div>
+                                        Queue progress:
+                                        <div class="progress" style="">
+                                            <div class="progress-bar" role="progressbar"
+                                                 ng-style="{ 'width': uploader.progress + '%' }"
+                                                 style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="uploader.uploadAll()"
+                                            ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload all
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.clearQueue()"
+                                            ng-disabled="!uploader.queue.length" disabled="disabled">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove all
+                                    </button>
+                                </div>
+
+                            </div>
+                            <!--End test-->
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-1 col-sm-2 control-label">Text</label>
+                            <div class="col-sm-10">
+                                <div ng-repeat="i in getNumber(10)  track by $index">
+                                    <input type="text" class="form-control round-form" ng-model="msgEdit.text[$index]">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-offset-5">
+                            <button class="btn btn-lg btn-primary" id="save-button" ng-click="save(msgEdit)"
+                                    type="submit"
+                                    ng-disabled="!msgEdit.name || !msgEdit.template || !msgEdit.showTime || !msgEdit.date[0] || !msgEdit.date[1] ">
+                                Save
+                            </button>
+                            <button class="btn btn-lg btn-danger" id="cancel-button" ng-click="cancel()" type="submit">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- col-lg-12-->
+        </div><!-- /row -->
+    </section>
+</div>
+
+<script>
+
+</script>
+
+
