@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Index</title>
+    <!--Angular Section-->
+    <script src="javascript/libs/angular.js"></script>
+    <script src="javascript/libs/angular-route.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../../CSS/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <script src="../../controllers/AdvPublicCtrl.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../../javascript/manageMessages.js"></script>
+    <script src="../../service/publicServices.js"></script>
+    <script src="../../controllers/ScreensCtrl.js"></script>
+
+
+    <!-- Custom styles for this template -->
+    <link href="CSS/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <style>
+        body {
+            background-image: url("https://image.ibb.co/gsYOxw/background.jpg");
+        }
+    </style>
+
+
+</head>
+<style>
+    #rcorners2 {
+        border-radius: 10px;
+    }
+</style>
+<body ng-app="showAdv" ng-controller="publicCtrl">
+
+<!--</nav>-->
+<nav class="text-center">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" href="#!/" aria-selected="true">Index</a>
+        </li>
+        <li class="nav-item">
+            <a href="manager" class="nav-link btn btn-outline-danger" aria-selected="false">Manager</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid text-center mb-2">
+    <div class="row content">
+        <!--Left SideBar-->
+        <div class="col-sm-2">
+
+        </div>
+        <!--Angular Page Content-->
+        <div class="col-sm-8 text-center">
+            <ng-view></ng-view>
+            <!--Right SideBar-->
+            <div class="col-sm-2">
+                <div class="well">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Ynet section-->
+    <div class="container">
+        <div id="rcorners2" class="bg-warning ">
+            <div class="row">
+                <div class="col-1">
+                    <img class="float-right" src="https://www.ynet.co.il/images/favicon/favicon_1.ico" height="35" width="35">
+                </div>
+                <div class="col-10">
+                    <marquee direction="left" class="float-right">
+                        <span ng-repeat="item in news">**{{item.title}}</span>
+                    </marquee>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Footer -->
+<br>
+<footer class="py-3 bg-dark" style="display: block;">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+</footer>
+</body>
+
+</html>
